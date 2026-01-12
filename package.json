@@ -1,0 +1,33 @@
+{
+  "name": "phonetic",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "start": "node dist/main.js",
+    "with-failure": "node dist/service-with-failure.js",
+    "no-recursive": "node dist/service-no-recursive.js",
+    "build": "tsc",
+    "test": "jest",
+    "test:coverage": "jest --coverage"
+  },
+  "keywords": [
+    "tenderboard",
+    "case-study",
+    "quiz"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/node": "^25.0.5",
+    "jest": "^30.2.0",
+    "ts-jest": "^29.4.6",
+    "undici-types": "^7.18.2"
+  },
+  "dependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}
