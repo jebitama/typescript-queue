@@ -1,4 +1,4 @@
-import { Technician, Customer, ServiceCenter } from './service';
+import { Technician, Customer, ServiceCenter } from './service.js';
 
 
 // ====================================================================================

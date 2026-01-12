@@ -1,4 +1,4 @@
-import { ServiceCenterWithoutRecursion, Technician , Customer} from './service';
+import { ServiceCenterWithoutRecursion, Technician , Customer} from './service.js';
 
 // ====================================================================================
 // MAIN

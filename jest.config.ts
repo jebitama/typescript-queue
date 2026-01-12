@@ -1,16 +1,21 @@
 import type { Config } from 'jest';
 
 const config: Config = {
-  preset: 'ts-jest',
-  globals: {
-    'ts-jest': {
-      tsconfig: 'tsconfig.json'
-    }
-  },
   testEnvironment: 'node',
+  transform: {
+    '^.+\\.ts$': [
+      'ts-jest',
+      {
+        tsconfig: 'tsconfig.jest.json'
+      }
+    ]
+  },
 
    // IMPORTANT: only test TS source
   testMatch: ['**/tests/**/*.test.ts'],
+  clearMocks: true,
+  restoreMocks: true,
+  resetMocks: true,
 
   collectCoverage: true,
   collectCoverageFrom: [

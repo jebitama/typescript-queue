@@ -273,7 +273,7 @@ export async function main() {
 const isMain =
   typeof process !== 'undefined' &&
   process.argv[1] &&
-  process.argv[1].endsWith('service-center.js');
+  process.argv[1].endsWith('service-with-failure.js');
 
 if (isMain) {
   main().catch(console.error);

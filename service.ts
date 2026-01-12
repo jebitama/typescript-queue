@@ -21,7 +21,7 @@ export class Technician {
         this._isBusy = true;
         console.log(
             `${this._name} is repairing ${customer.name}'s phone, ` +
-            `${customer.phoneSeries} Series`
+            `${customer.name}'s phone is ${customer.phoneSeries} Series`
         );
 
         return new Promise<Customer>((resolve) => {
@@ -68,6 +68,12 @@ export class ServiceCenter {
         this._customers = customers;
     }
 
+    // log memory usage
+    private get logMemory() {
+        const used = process.memoryUsage().heapUsed;
+        return `${(used / 1024 / 1024).toFixed(2)} MB`;
+    }
+
     public get name() {
         return this._name;
     }
@@ -85,11 +91,12 @@ export class ServiceCenter {
     ): Promise<void> {
        const customer = this._customers.shift();
 
-        // Base case: no more customers
+        // If no customer, no calling
         if (!customer) return;
 
+        // Calling happens only after a customer is confirmed
         console.log(`${technician.name} available, calling ${customer.name}...`);
-
+        // log current state of repair
         console.table([
             {
                 Customer: customer.name,
@@ -101,9 +108,12 @@ export class ServiceCenter {
         // Wait for repair
         await technician.repairing(customer);
 
-        // RECURSION version will add calling Stack frames accumulated 
-        // but in this case still fine since it using async so it is not acumulated and low data size) 
-        // this approche is not recommended in a bigger customer size that can cause crash node in some case
+        // log memory usage
+        console.log('Memory Usage:', this.logMemory);
+
+        // RECURSION version will add calling Stack frames accumulated if non async function
+        // but in this case still fine since it using async so it is not acumulated and in low data size
+        // this approach is not recommended in a bigger customer size since can cause not predictable spike
         return this.runTechnician(technician);
     }
 }
@@ -119,6 +129,12 @@ export class ServiceCenterWithoutRecursion {
         this._address = address;
         this._technicians = technicians;
         this._customers = customers;
+    }
+    
+    // log memory usage 
+    private get logMemory() {
+        const used = process.memoryUsage().heapUsed;
+        return `${(used / 1024 / 1024).toFixed(2)} MB`;
     }
 
     public get name() {
@@ -143,9 +159,20 @@ export class ServiceCenterWithoutRecursion {
 
             // Calling happens only after a customer is confirmed
             console.log(`${technician.name} available, calling ${customer.name}...`);
+            // log current state of repair
+            console.table([
+                {
+                    Customer: customer.name,
+                    PhoneSeries: customer.phoneSeries,
+                    RepairedBy: technician.name,
+                },
+            ]);
 
             // Wait for repair
             await technician.repairing(customer);
+
+            // log memory usage
+            console.log('Memory Usage:', this.logMemory);
         }
     }
 }
